@@ -44,8 +44,8 @@ macro_rules! newtype_derive {
 		impl Add for $alias {
 			type Output = $alias;
 			fn add(self, _rhs: $alias) -> Self {
-				let $alias(ref l) = self;
-				let $alias(ref r) = _rhs;
+				let l: $t = self.into();
+				let r: $t = _rhs.into();
 			 	$alias::from(l + r)
 	 		}
 		}
@@ -54,8 +54,8 @@ macro_rules! newtype_derive {
 		impl Sub for $alias {
 			type Output = $alias;
 			fn sub(self, _rhs: $alias) -> Self {
-				let $alias(ref l) = self;
-				let $alias(ref r) = _rhs;
+				let l: $t = self.into();
+				let r: $t = _rhs.into();
 			 	$alias::from(l - r)
 	 		}
 		}
@@ -64,8 +64,8 @@ macro_rules! newtype_derive {
 		impl Mul for $alias {
 			type Output = $alias;
 			fn mul(self, _rhs: $alias) -> Self {
-				let $alias(ref l) = self;
-				let $alias(ref r) = _rhs;
+				let l: $t = self.into();
+				let r: $t = _rhs.into();
 			 	$alias::from(l * r)
 	 		}
 		}
@@ -74,8 +74,8 @@ macro_rules! newtype_derive {
 		impl Div for $alias {
 			type Output = $alias;
 			fn div(self, _rhs: $alias) -> Self {
-				let $alias(ref l) = self;
-				let $alias(ref r) = _rhs;
+				let l: $t = self.into();
+				let r: $t = _rhs.into();
 			 	$alias::from(l / r)
 	 		}
 		}
@@ -84,7 +84,7 @@ macro_rules! newtype_derive {
 		impl Neg for $alias {
 			type Output = $alias;
 			fn neg(self) -> Self {
-				let $alias(ref v) = self;
+				let v: $t = self.into();
 			 	$alias::from(-v)
 	 		}
 		}
@@ -128,7 +128,7 @@ fn test_newtype() {
 
 #[test]
 fn test_add() {
-	newtype!(Miles,u32,From,Add);
+	newtype!(Miles,u32,From,Into,Add);
 	let m = Miles::from(14);
 	let m2 = Miles::from(20);
 	assert_eq!(Miles::from(34),m+m2);
@@ -136,7 +136,7 @@ fn test_add() {
 
 #[test]
 fn test_sub() {
-	newtype!(Miles,u32,From,Sub);
+	newtype!(Miles,u32,From,Into,Sub);
 	let m = Miles::from(20);
 	let m2 = Miles::from(14);
 	assert_eq!(Miles::from(6),m-m2);
@@ -144,7 +144,7 @@ fn test_sub() {
 
 #[test]
 fn test_mul() {
-	newtype!(Miles,u32,From,Mul);
+	newtype!(Miles,u32,From,Into,Mul);
 	let m = Miles::from(14);
 	let m2 = Miles::from(20);
 	assert_eq!(Miles::from(280),m*m2);
@@ -152,7 +152,7 @@ fn test_mul() {
 
 #[test]
 fn test_div() {
-	newtype!(Miles,f64,From,Div);
+	newtype!(Miles,f64,From,Into,Div);
 	let m = Miles::from(20f64);
 	let m2 = Miles::from(5f64);
 	assert_eq!(Miles::from(4f64),m/m2);
@@ -160,7 +160,7 @@ fn test_div() {
 
 #[test]
 fn test_neg() {
-	newtype!(Miles,i32,From,Neg);
+	newtype!(Miles,i32,From,Into,Neg);
 	let m = Miles::from(20);
 	assert_eq!(Miles::from(-20),-m);
 }
