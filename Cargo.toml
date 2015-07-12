@@ -1,0 +1,4 @@
+[package]
+name = "newtype_macros"
+version = "0.1.0"
+authors = ["Arien Malec <arien.malec@gmail.com>"]
