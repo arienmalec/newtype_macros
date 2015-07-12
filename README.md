@@ -24,7 +24,6 @@ This library provides two macros: `newtype_derive!` and `newtype!`. The first op
 
 ```rust
 #[macro_use]
-#[macro_use]
 extern crate newtype_macros;
 use std::convert::{From,Into};
 use std::ops::{Add,Mul,Sub,Div,Neg,Deref};
