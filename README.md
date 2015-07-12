@@ -16,26 +16,29 @@ Many people have created macros to automate this, and perform the equivalent of 
 
 ## Usage
 
-(TODO: crates and such)
-
-This library provides two macros: `newtype_derive!` and `newtype!`. The first operates on an existing newtype definition and allows configurable derivation of the traits `Deref`, `From`, `Into`, `Display`, `Add`, `Sub`, `Mul`, `Div`, and `Neg`. The second creates the newtype, provides basic Rust derives (`Debug` and partial equality/ordering) (TODO: make the derives configurable), and uses, behind the covers, the first to derive the same traits.
+This library provides two macros: `newtype_derive!` and `newtype!`. The first operates on an existing newtype definition and allows configurable derivation of the traits `Deref`, `From`, `Into`, `Display`, `Add`, `Sub`, `Mul`, `Div`, and `Neg`. The second creates the newtype, provides basic Rust derives (`Debug` and partial equality/ordering).
 
 `From`, `Into`, and `Deref` provide (respectively) basic conversion from/to the underlying value, and provide access to a reference to the underlying value value. The other defaults delegate to the underlying value for display and arithmetic operations.
 
 
-Here is a basic usage example (TODO crating, etc.):
 
 ```rust
 #[macro_use]
-mod newtype_macros; //TODO: Change this
+#[macro_use]
+extern crate newtype_macros;
+use std::convert::{From,Into};
+use std::ops::{Add,Mul,Sub,Div,Neg,Deref};
+use std::fmt::{self,Display};
 
 fn main() {
-	newtype!(Miles,u32,Display,From,Into,Deref);
+	newtype!(Miles,u32,Display,From,Into,Deref,Add);
 	let m = Miles::from(14);
-	let m2:Miles = 14.into();
+	let m2:Miles = 7.into();
 	assert_eq!(*m,14);
-	assert_eq!(*m2,14);
-	println!("{} miles",m)); // Output: "14 miles"
+	assert_eq!(*m2,7);
+	print!("{} miles ",m);
+	print!("plus {} miles ",m2);
+	println!("is {} miles", m+m2);
 }
 ```
 
@@ -45,7 +48,12 @@ Arithmetic functions use `From` and `Into` to perform conversion to/from the und
 newtype!(Miles,u32,From,Into,Add);
 let m = Miles::from(500);
 let m2 = Miles::from(500);
-println!("I would walk {} miles/ and I would walk {} more/ just to be the man who walked a {} miles/to fall down at your door", m, m2, m+m2);
+print!("I would walk {} miles/",m);
+print!("and I would walk {} more/,m2);
+println("just to be the man who walked a {} miles/to fall down at your door", m+m2);
 ```
 
+## Limitations
 
+Hardwires the `#[define]`s in the `newtype!` macro. 
+Does not work at all with references (because of the need to declare lifetime specifiers)
