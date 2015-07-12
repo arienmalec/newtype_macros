@@ -30,14 +30,14 @@ use std::ops::{Add,Mul,Sub,Div,Neg,Deref};
 use std::fmt::{self,Display};
 
 fn main() {
-	newtype!(Miles,u32,Display,From,Into,Deref,Add);
-	let m = Miles::from(14);
-	let m2:Miles = 7.into();
-	assert_eq!(*m,14);
-	assert_eq!(*m2,7);
-	print!("{} miles ",m);
-	print!("plus {} miles ",m2);
-	println!("is {} miles", m+m2);
+    newtype!(Miles,u32,Display,From,Into,Deref,Add);
+    let m = Miles::from(14);
+    let m2:Miles = 7.into();
+    assert_eq!(*m,14);
+    assert_eq!(*m2,7);
+    print!("{} miles ",m);
+    print!("plus {} miles ",m2);
+    println!("is {} miles", m+m2);
 }
 ```
 
