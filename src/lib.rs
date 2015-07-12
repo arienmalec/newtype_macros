@@ -5,6 +5,34 @@ use std::ops::{Add,Mul,Sub,Div,Neg,Deref};
 #[allow(unused_imports)]
 use std::fmt::{self,Display};
 
+
+/// Expands to a set of trait implementations for a newtype definition.
+///
+/// Supports the following traits:
+/// - From -- converts from the wrapped type to the newtype
+/// - Into -- consumes the alias type and returns the wrapped type
+/// - Deref -- provides a reference to the wrapped type
+/// - Display -- delegates to the wrapped type for display
+/// - The following arithmetic traits which delegate to the wrapped type
+///   (and which require implementations of From and Into):
+/// -- Add
+/// -- Sub
+/// -- Mul
+/// -- Div
+/// -- Neg
+///
+/// # Examples
+/// # #[macro_use] extern crate newtype_macros;
+/// # # fn main() {
+/// struct Miles(u32);
+///	newtype_derive!(Miles,u32,Display,From,Into,Deref);
+///	let m = Miles::from(14);
+///	let m2:Miles = 14.into();
+///	assert_eq!(*m,14);
+///	assert_eq!(*m2,14);
+///	assert_eq!(String::from("14"),format!("{}",m));
+/// # # }
+
 #[macro_export]
 macro_rules! newtype_derive {
 	() => (());
@@ -95,6 +123,21 @@ macro_rules! newtype_derive {
 
 }
 
+/// Expands to a newtype defintion with basic derives, and uses newtype_derive! to derive traits
+///
+/// Supports same traits as newtype_derive!, and additionally inserts #[define] attributes for
+/// Debug, PartialEq and PartialOrd (assumes the underlying trait supports these as well)
+///
+/// # Examples
+/// # #[macro_use] extern crate newtype_macros;
+/// # # fn main() {
+///	newtype!(Miles,u32,From,Into,Add);
+///	let m = Miles::from(14);
+///	let m2 = Miles::from(20);
+///	assert_eq!(Miles::from(34),m+m2);
+/// # # }
+
+#[macro_export]
 macro_rules! newtype {
 	($alias:ident, $t:ty, $($keyword:ident),*) => {
 		#[derive(Debug,PartialEq,PartialOrd)]

@@ -12,7 +12,7 @@ By themselves, however, such newtypes are somewhat inconvenient to work with. Th
 
 Unfortunately, Rust does not currently allow `#[derive(From)]` or similar annotations. There is [a tracking RFC](https://github.com/rust-lang/rfcs/issues/261) for making newtypes more convenient. Implementing the basic traits on newtypes is often a tedious exercise in cut and paste, particularly if you have a large set of newtypes to create.
 
-Many people have created macros automate this, and perform the equivalent of `[#derive]`. This repository tries to encapsulate a single reasonable way of automatically creating newtypes and newtype traits.
+Many people have created macros to automate this, and perform the equivalent of `[#derive]`. This repository tries to encapsulate a single reasonable way of automatically creating newtypes and newtype traits.
 
 ## Usage
 
@@ -20,7 +20,7 @@ Many people have created macros automate this, and perform the equivalent of `[#
 
 This library provides two macros: `newtype_derive!` and `newtype!`. The first operates on an existing newtype definition and allows configurable derivation of the traits `Deref`, `From`, `Into`, `Display`, `Add`, `Sub`, `Mul`, `Div`, and `Neg`. The second creates the newtype, provides basic Rust derives (`Debug` and partial equality/ordering) (TODO: make the derives configurable), and uses, behind the covers, the first to derive the same traits.
 
-`From`, `Into, and `Deref` provide (respectively) basic conversion from/to the underlying value, and provide access to a reference to the underlying value value. The other defaults delegate to the underlying value for display and arithmetic operations.
+`From`, `Into`, and `Deref` provide (respectively) basic conversion from/to the underlying value, and provide access to a reference to the underlying value value. The other defaults delegate to the underlying value for display and arithmetic operations.
 
 
 Here is a basic usage example (TODO crating, etc.):
