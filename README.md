@@ -44,7 +44,7 @@ fn main() {
 
 Arithmetic functions use `From` and `Into` to perform conversion to/from the underlying value. This is to allow, for example, preliminary conversion to be implemented via `From` and `Into` before delegating to the underlying type to perform the operations. Therefore, to add automatic derivations of these traits, either `From` and `Into` must also be derived, or must be manually implemented.
 
-```
+```rust
 newtype!(Miles,u32,From,Into,Add);
 let m = Miles::from(500);
 let m2 = Miles::from(500);
