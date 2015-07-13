@@ -1,0 +1,7 @@
+[package]
+version = "0.0.0"
+name = "newtype_macros"
+
+[lib]
+name = "newtype_macros"
+path = "../src/lib.rs"
