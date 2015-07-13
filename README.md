@@ -16,7 +16,7 @@ Many people have created macros to automate this, and perform the equivalent of 
 
 ## Usage
 
-This library provides two macros: `newtype_derive!` and `newtype!`. The first operates on an existing newtype definition and allows configurable derivation of the traits `Deref`, `DerefMut`, `From`, `Into`, `Display`, `Add`, `Sub`, `Mul`, `Div`, and `Neg`. The second creates the newtype with any provided additional attribute based derives (e.g., #[derive(Debug)]) and then creates traits through `newtype_derive!`.
+This library provides two macros: `newtype_derive!` and `newtype!`. The first operates on an existing newtype definition and allows configurable derivation of the traits `Deref`, `DerefMut`, `From`, `Into`, `Display`, `Add`, `Sub`, `Mul`, `Div`, and `Neg`. The second creates the newtype with any provided additional attribute based derives (e.g., `#[derive(Debug)]`) and then creates traits through `newtype_derive!`.
 
 `From`, `Into`, and `Deref` provide (respectively) basic conversion from/to the underlying value, and provide access to a reference to the underlying value value. The other defaults delegate to the underlying value for display and arithmetic operations.
 
