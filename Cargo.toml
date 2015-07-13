@@ -5,5 +5,4 @@ authors = ["Arien Malec <arien.malec@gmail.com>"]
 
 [lib]
 name = "newtype_macros"
-crate-type = ["dylib"]
 plugin = true
