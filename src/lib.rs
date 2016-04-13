@@ -123,6 +123,16 @@ macro_rules! newtype_derive {
             }
         }
     };
+    ($alias:ident($t:ty): Rem) => {
+        impl ::std::ops::Rem for $alias {
+            type Output = $alias;
+            fn rem(self, rhs: $alias) -> Self {
+                let l = ::std::convert::Into::<$t>::into(self);
+                let r = ::std::convert::Into::<$t>::into(rhs);
+                ::std::convert::From::<$t>::from(l.rem(r))
+            }
+        }
+    };
     ($alias:ident($t:ty): Neg) => {
         impl ::std::ops::Neg for $alias {
             type Output = $alias;
@@ -241,6 +251,14 @@ mod tests {
         let m = Miles::from(20f64);
         let m2 = Miles::from(5f64);
         assert_eq!(Miles::from(4f64), m / m2);
+    }
+
+    #[test]
+    fn test_rem() {
+        newtype!(#[derive(Debug, PartialEq)] struct Miles(f64): From, Into, Rem);
+        let m = Miles::from(20f64);
+        let m2 = Miles::from(5f64);
+        assert_eq!(Miles::from(0f64), m % m2);
     }
 
     #[test]
