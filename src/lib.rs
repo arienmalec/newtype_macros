@@ -170,6 +170,12 @@ macro_rules! newtype {
 
         $(newtype_derive!($alias($t): $keyword);)*
     };
+    ($(#[$meta:meta])* pub struct $alias:ident(pub $t:ty): $($keyword:ident),*) => {
+        $(#[$meta])*
+        pub struct $alias(pub $t);
+
+        $(newtype_derive!($alias($t): $keyword);)*
+    };
     ($(#[$meta:meta])* pub struct $alias:ident($t:ty): $($keyword:ident),*) => {
         $(#[$meta])*
         pub struct $alias($t);
